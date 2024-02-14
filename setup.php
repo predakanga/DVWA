@@ -10,14 +10,21 @@ $page[ 'title' ]   = 'Setup' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
-	// Anti-CSRF
-	if (array_key_exists ("session_token", $_SESSION)) {
-		$session_token = $_SESSION[ 'session_token' ];
+	if (array_key_exists ('setup_token', $_SESSION) && $setupToken = getenv('DVWA_SETUP')) {
+		if ($_SESSION['setup_token'] !== $setupToken) {
+			header('HTTP/1.1 401 Unauthorized');
+			die('Incorrect setup token');
+		}
 	} else {
-		$session_token = "";
-	}
+		// Anti-CSRF
+		if (array_key_exists ("session_token", $_SESSION)) {
+			$session_token = $_SESSION[ 'session_token' ];
+		} else {
+			$session_token = getenv('DVWA_SETUP') ?: '';
+		}
 
-	checkToken( $_REQUEST[ 'user_token' ], $session_token, 'setup.php' );
+		checkToken( $_REQUEST[ 'user_token' ], $session_token, 'setup.php' );
+	}
 
 	if( $DBMS == 'MySQL' ) {
 		include_once DVWA_WEB_PAGE_TO_ROOT . 'dvwa/includes/DBMS/MySQL.php';
