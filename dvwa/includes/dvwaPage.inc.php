@@ -353,18 +353,12 @@ function dvwaHtmlEcho( $pPage ) {
 	Header( 'Content-Type: text/html;charset=utf-8' );     // TODO- proper XHTML headers...
 	Header( 'Expires: Tue, 23 Jun 2009 12:00:00 GMT' );    // Date in the past
 
-	$baseTag = '';
-	if  ( array_key_exists( 'HTTP_X_FORWARDED_PREFIX' , $_SERVER )) {
-		$baseTag = "<base href=\"{$_SERVER['HTTP_X_FORWARDED_PREFIX']}/\" />";
-	}
-
 	echo "<!DOCTYPE html>
 
 <html lang=\"en-GB\">
 
 	<head>
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
-  		{$baseTag}
 
 		<title>{$pPage[ 'title' ]}</title>
 
