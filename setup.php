@@ -10,10 +10,14 @@ $page[ 'title' ]   = 'Setup' . $page[ 'title_separator' ].$page[ 'title' ];
 $page[ 'page_id' ] = 'setup';
 
 if( isset( $_POST[ 'create_db' ] ) ) {
-	if (array_key_exists ('setup_token', $_REQUEST) && $setupToken = getenv('DVWA_SETUP')) {
-		if ($_REQUEST['setup_token'] !== $setupToken) {
-			header('HTTP/1.1 401 Unauthorized');
-			die('Incorrect setup token');
+	if ($setupToken = getenv('DVWA_SETUP')) {
+		if (array_key_exists ('setup_token', $_REQUEST)) {
+			if ($_REQUEST['setup_token'] !== $setupToken) {
+				header('HTTP/1.1 401 Unauthorized');
+				die('Incorrect setup token');
+			}
+		} else {
+			die('This instance is configured to automatically set itself up. To reset the database, use sudo systemctl restart docker-compose@dvwa-noauth');
 		}
 	} else {
 		// Anti-CSRF

@@ -9,7 +9,7 @@ networks:
 services:
   dvwa:
     build: .
-    image: ghcr.io/digininja/dvwa:latest
+    image: ghcr.io/predakanga/dvwa:latest
     # Change `always` to `build` to build from local source
     pull_policy: always
     environment:
@@ -24,7 +24,7 @@ services:
     restart: unless-stopped
 
   setup:
-    image: busybox:latest
+    image: ghcr.io/predakanga/dvwa:latest
     pull_policy: missing
     depends_on:
       dvwa:
