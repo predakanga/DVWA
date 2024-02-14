@@ -1,7 +1,7 @@
 <?php
 
 if ($securityLevel = getenv('DVWA_SECURITY')) {
-	die("This instance is hardcoded to ${securityLevel} security");
+	die("This instance is hardcoded to {$securityLevel} security");
 }
 
 define( 'DVWA_WEB_PAGE_TO_ROOT', '' );
