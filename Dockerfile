@@ -18,4 +18,4 @@ RUN apt-get update \
 COPY --chown=www-data:www-data . .
 COPY --chown=www-data:www-data config/config.inc.php.dist config/config.inc.php
 
-HEALTHCHECK --interval=5s CMD curl -fso /dev/null http://localhost/ || exit 1
+HEALTHCHECK --interval=5s CMD curl -fso /dev/null http://localhost/health.php || exit 1
